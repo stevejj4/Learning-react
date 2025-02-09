@@ -1,22 +1,8 @@
-function Profile() {
-  return (
-    <img
-    src="https://i.imgur.com/MK3eW3Am.jpg"
-    alt = "Katherine Johnson"
-    />
-  );
-}
+import Gallery from './Gallery.js';
+import { Profile } from './Gallery.js';
 
-export default function Gallery() {
+export default function App() {
   return (
-    <section>
-      <hi>The War Room Members</hi>
-      <Profile />
-      <Profile />
-      <Profile />
-      <Profile />
-      <profile />
-      
-    </section>
+    <Profile />
   );
 }
