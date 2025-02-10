@@ -1,7 +1,7 @@
-import Gallery from './Gallery.js';
+import LoginPage from "./components/LoginPage";
 
-export default function App() {
-  return(
-    <Gallery />
-  );
+function App() {
+  return <LoginPage />;
 }
+
+export default App;
