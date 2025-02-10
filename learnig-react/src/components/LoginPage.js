@@ -1,50 +1,93 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (!username || !password) {
-      setError("Both fields are required!");
+    setError(""); // Reset error on each submission attempt
+
+    if (!email || !password) {
+      setError("Both fields are required.");
       return;
     }
-    setError(""); // Clear errors
-    alert(`Welcome, ${username}!`); // Simulate login
+
+    setLoading(true);
+
+    // Simulate login API request (replace with real API call)
+    setTimeout(() => {
+      setLoading(false);
+      alert("Login successful!"); // Replace with proper authentication handling
+    }, 1500);
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Login</h2>
-      <form onSubmit={handleLogin} style={styles.form}>
-        {error && <p style={styles.error}>{error}</p>}
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={styles.input}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={styles.input}
-        />
-        <button type="submit" style={styles.button}>Login</button>
-      </form>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-96 text-center">
+        {/* Logo & Title */}
+        <h1 className="text-2xl font-semibold mb-6">📊 Report Assistant</h1>
+
+        {/* Error Message */}
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
+        {/* Login Form */}
+        <form onSubmit={handleLogin} className="space-y-4">
+          {/* Email Input */}
+          <input
+            type="email"
+            placeholder="Username/Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+            aria-label="Email"
+          />
+
+          {/* Password Input */}
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+            aria-label="Password"
+          />
+
+          {/* Remember Me Checkbox */}
+          <div className="flex items-center justify-start text-sm">
+            <input type="checkbox" id="remember" className="mr-2" />
+            <label htmlFor="remember" className="text-gray-600">
+              Remember Me
+            </label>
+          </div>
+
+          {/* Login Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full p-3 rounded-md text-white ${
+              loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            } transition`}
+            aria-label="Login Button"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        {/* Links: Forgot Password & Sign Up */}
+        <div className="flex justify-between text-sm mt-6">
+          <a href="/forgot-password" className="text-blue-500 hover:underline" aria-label="Forgot Password">
+            Forgot Password?
+          </a>
+          <a href="/sign-up" className="text-blue-500 hover:underline" aria-label="Sign Up">
+            Sign Up
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
-
-const styles = {
-  container: { maxWidth: "300px", margin: "50px auto", textAlign: "center", padding: "20px", border: "1px solid #ddd", borderRadius: "8px", background: "#f9f9f9" },
-  title: { fontSize: "24px", marginBottom: "10px" },
-  form: { display: "flex", flexDirection: "column" },
-  input: { padding: "10px", margin: "5px 0", borderRadius: "5px", border: "1px solid #ddd", fontSize: "16px" },
-  button: { padding: "10px", background: "blue", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", fontSize: "16px" },
-  error: { color: "red", fontSize: "14px" }
-};
